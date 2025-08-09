@@ -1,1284 +1,1478 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOKSHA STUDIOS - Innovating the Future of Blockchain, AI, and Web3</title>
-    <meta name="description" content="MOKSHA STUDIOS - Leading IT studio specializing in blockchain development, AI integration, Web3 solutions, and decentralized applications.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="description"
+      content="MOKSHA STUDIOS — Innovating the Future of Blockchain, AI, and Web3 with cutting-edge decentralized solutions."
+    />
+    <title>MOKSHA STUDIOS — Blockchain, AI, Web3</title>
+
     <style>
-        /* CSS Variables */
-        :root {
-            --primary-bg: #0a0a0a;
-            --secondary-bg: #111111;
-            --accent-bg: #1a1a1a;
-            --neon-green: #39FF14;
-            --neon-cyan: #00FFE7;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --text-muted: #888888;
-            --glow-green: 0 0 20px rgba(57, 255, 20, 0.5);
-            --glow-cyan: 0 0 20px rgba(0, 255, 231, 0.5);
-            --shadow-glow: 0 8px 32px rgba(57, 255, 20, 0.1);
-        }
+      /* =============== CSS Variables & Base =============== */
+      :root {
+        --bg: #0a0b0d;
+        --bg-elev: #0f1216;
+        --bg-soft: #101317;
+        --line: #11151a;
+        --card: #0c0f12;
+        --text: #e8f1f8;
+        --muted: #9badbd;
+        --neon: #39ff14; /* neon green */
+        --cyan: #00ffe7; /* cyan accent */
+        --shadow-neon: 0 0 12px rgba(57, 255, 20, 0.25),
+          0 0 28px rgba(0, 255, 231, 0.12);
+        --shadow-strong: 0 0 18px rgba(57, 255, 20, 0.35),
+          0 0 48px rgba(0, 255, 231, 0.18);
+        --radius: 16px;
+        --maxw: 1200px;
+        --grid-gap: clamp(16px, 2vw, 28px);
+        --heading-tracking: 0.08em;
+      }
+      [data-theme="light"] {
+        --bg: #f7fafc;
+        --bg-elev: #ffffff;
+        --bg-soft: #f2f6fb;
+        --line: #e8eef6;
+        --card: #ffffff;
+        --text: #0d1117;
+        --muted: #4b5563;
+        --neon: #12c414;
+        --cyan: #14d8ff;
+        --shadow-neon: 0 0 8px rgba(18, 196, 20, 0.18),
+          0 0 20px rgba(20, 216, 255, 0.1);
+        --shadow-strong: 0 0 12px rgba(18, 196, 20, 0.25),
+          0 0 32px rgba(20, 216, 255, 0.12);
+      }
 
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+          Arial, "Noto Sans", "Liberation Sans", sans-serif;
+        line-height: 1.65;
+        letter-spacing: 0.01em;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+      }
+      .container {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 clamp(16px, 5vw, 32px);
+      }
 
-        html {
-            scroll-behavior: smooth;
-        }
+      /* =============== Accessibility Helpers =============== */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--bg-elev);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 8px;
+        box-shadow: var(--shadow-neon);
+        z-index: 10000;
+      }
+      .skip-link:focus {
+        top: 12px;
+      }
+      :focus-visible {
+        outline: 2px dashed var(--cyan);
+        outline-offset: 3px;
+      }
 
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--primary-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
+      /* =============== Top Grid Background Lines =============== */
+      .grid-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image: linear-gradient(
+            0deg,
+            transparent 0 23px,
+            var(--line) 24px
+          ),
+          linear-gradient(90deg, transparent 0 23px, var(--line) 24px);
+        background-size: 24px 24px;
+        opacity: 0.35;
+        pointer-events: none;
+      }
 
-        /* Background Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+      /* =============== Particle Canvas =============== */
+      #bg-canvas {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.55;
+      }
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.3;
-        }
+      /* =============== Header / Nav =============== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: saturate(120%) blur(8px);
+        background: linear-gradient(
+          to bottom,
+          color-mix(in oklab, var(--bg), #000 12%),
+          color-mix(in oklab, var(--bg), transparent 100%)
+        );
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 64px;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: var(--heading-tracking);
+        text-transform: uppercase;
+      }
+      .brand-badge {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        background: radial-gradient(
+          60% 60% at 50% 50%,
+          var(--neon),
+          transparent
+        );
+        box-shadow: 0 0 16px var(--neon);
+      }
+      nav ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 8px;
+      }
+      nav a {
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: var(--muted);
+        transition: color 160ms ease, box-shadow 200ms ease, transform 200ms ease,
+          background 200ms ease;
+      }
+      nav a:hover,
+      nav a:focus-visible {
+        color: var(--text);
+        background: color-mix(in oklab, var(--bg-elev), var(--neon) 6%);
+        box-shadow: 0 0 12px color-mix(in oklab, var(--neon), transparent 75%);
+        transform: translateY(-1px);
+      }
+      .theme-toggle {
+        border: 1px solid var(--line);
+        background: var(--bg-soft);
+        color: var(--text);
+        border-radius: 12px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: transform 200ms ease, box-shadow 220ms ease,
+          border-color 220ms ease;
+        box-shadow: var(--shadow-neon);
+      }
+      .theme-toggle:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-strong);
+        border-color: color-mix(in oklab, var(--cyan), transparent 60%);
+      }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+      /* =============== Hero =============== */
+      .hero {
+        min-height: 100svh;
+        position: relative;
+        display: grid;
+        place-items: center;
+        padding: clamp(64px, 8vh, 96px) 0 80px;
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+        background:
+          radial-gradient(
+            1200px 600px at 80% 20%,
+            color-mix(in oklab, var(--cyan), transparent 90%) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            900px 480px at 20% 80%,
+            color-mix(in oklab, var(--neon), transparent 90%) 0%,
+            transparent 70%
+          ),
+          linear-gradient(to bottom, transparent 0%, transparent 60%, var(--bg) 100%);
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          linear-gradient(
+            to top,
+            color-mix(in oklab, var(--bg), transparent 0%),
+            color-mix(in oklab, #000000, transparent 0%)
+          ),
+          url("./assets/HeroBackground.jpg") center/cover no-repeat;
+        filter: saturate(120%) contrast(1.05) brightness(0.9);
+        opacity: 0.4;
+      }
+      .hero-content {
+        text-align: center;
+        padding: 0 clamp(16px, 5vw, 32px);
+      }
+      .hero h1 {
+        margin: 0 0 12px 0;
+        font-size: clamp(32px, 6vw, 72px);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: var(--heading-tracking);
+        color: var(--text);
+        text-shadow: 0 0 16px rgba(57, 255, 20, 0.35),
+          0 0 32px rgba(0, 255, 231, 0.2);
+        position: relative;
+        display: inline-block;
+        isolation: isolate;
+      }
+      /* Subtle neon outline/glow effect */
+      .hero h1::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 16px;
+        background: radial-gradient(
+          60% 60% at 50% 50%,
+          color-mix(in oklab, var(--neon), transparent 85%),
+          transparent
+        );
+        filter: blur(12px);
+        z-index: -1;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      /* Flicker animation */
+      @keyframes flicker {
+        0%,
+        19%,
+        21%,
+        23%,
+        25%,
+        54%,
+        56%,
+        100% {
+          opacity: 1;
+          text-shadow: 0 0 12px rgba(57, 255, 20, 0.4),
+            0 0 28px rgba(0, 255, 231, 0.2);
         }
-
-        /* Typography */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            line-height: 1.2;
+        20%,
+        24%,
+        55% {
+          opacity: 0.9;
+          text-shadow: 0 0 6px rgba(57, 255, 20, 0.35),
+            0 0 16px rgba(0, 255, 231, 0.18);
         }
-
-        .glow-text {
-            text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+        22% {
+          opacity: 0.95;
         }
+      }
+      .hero .title-flicker {
+        animation: flicker 5.5s linear infinite;
+      }
+      .hero p {
+        margin: 0 auto 28px auto;
+        max-width: 900px;
+        font-size: clamp(16px, 2.2vw, 20px);
+        color: var(--muted);
+      }
+      .cta-row {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        --btn-glow: color-mix(in oklab, var(--neon), var(--cyan) 45%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: linear-gradient(
+            to bottom,
+            color-mix(in oklab, var(--bg-soft), var(--neon) 6%),
+            color-mix(in oklab, var(--bg-soft), var(--cyan) 4%)
+          ),
+          var(--bg-soft);
+        color: var(--text);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        transition: transform 200ms ease, box-shadow 220ms ease,
+          border-color 200ms ease, background 220ms ease;
+        box-shadow: 0 0 10px color-mix(in oklab, var(--btn-glow), transparent 80%);
+      }
+      .btn:hover,
+      .btn:focus-visible {
+        transform: translateY(-2px) scale(1.02);
+        border-color: color-mix(in oklab, var(--btn-glow), transparent 35%);
+        box-shadow: 0 0 14px color-mix(in oklab, var(--btn-glow), transparent 65%),
+          0 0 36px color-mix(in oklab, var(--btn-glow), transparent 80%);
+      }
+      .btn-outline {
+        background: transparent;
+        border-color: color-mix(in oklab, var(--neon), transparent 60%);
+      }
 
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: transparent;
-            border: 2px solid var(--neon-green);
-            color: var(--neon-green);
-            text-decoration: none;
-            font-family: 'Orbitron', monospace;
-            font-weight: 600;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
+      /* Scroll indicator */
+      .scroll-indicator {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--muted);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .scroll-indicator .chevron {
+        width: 16px;
+        height: 16px;
+        border-right: 2px solid var(--neon);
+        border-bottom: 2px solid var(--neon);
+        transform: rotate(45deg);
+        filter: drop-shadow(0 0 6px rgba(57, 255, 20, 0.6));
+        animation: bounce 1.8s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0) rotate(45deg);
         }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.2), transparent);
-            transition: left 0.5s;
+        50% {
+          transform: translateY(6px) rotate(45deg);
         }
+      }
 
-        .btn:hover::before {
-            left: 100%;
+      /* =============== Section Base =============== */
+      section {
+        position: relative;
+        padding: clamp(64px, 10vh, 96px) 0;
+        background:
+          radial-gradient(
+            900px 500px at 10% 10%,
+            color-mix(in oklab, var(--cyan), transparent 95%),
+            transparent 70%
+          ),
+          radial-gradient(
+            900px 500px at 90% 90%,
+            color-mix(in oklab, var(--neon), transparent 96%),
+            transparent 70%
+          );
+      }
+      .section-header {
+        margin-bottom: clamp(24px, 3vh, 36px);
+      }
+      .eyebrow {
+        display: inline-block;
+        color: var(--cyan);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 10px;
+        opacity: 0.85;
+      }
+      h2 {
+        font-size: clamp(24px, 4.5vw, 40px);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin: 0 0 10px 0;
+        text-shadow: 0 0 12px rgba(0, 255, 231, 0.15);
+      }
+      .section-desc {
+        color: var(--muted);
+        max-width: 780px;
+      }
+
+      /* =============== Reveal Animations =============== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 700ms ease, transform 700ms ease;
+        will-change: opacity, transform;
+      }
+      .reveal.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* =============== About =============== */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: var(--grid-gap);
+        align-items: center;
+      }
+      .about-card {
+        background: linear-gradient(
+              to bottom right,
+              color-mix(in oklab, var(--bg-elev), var(--neon) 2%),
+              color-mix(in oklab, var(--bg-elev), var(--cyan) 2%)
+            )
+            padding-box,
+          linear-gradient(
+              to bottom right,
+              color-mix(in oklab, var(--neon), transparent 60%),
+              color-mix(in oklab, var(--cyan), transparent 70%)
+            )
+            border-box;
+        border: 1px solid transparent;
+        border-radius: var(--radius);
+        padding: clamp(16px, 2.5vw, 28px);
+        box-shadow: var(--shadow-neon);
+      }
+      .about-card p {
+        margin: 0;
+      }
+      .about-card .highlight {
+        color: var(--neon);
+        text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+      }
+      .about-card u {
+        text-decoration: none;
+        background: linear-gradient(
+          to right,
+          color-mix(in oklab, var(--cyan), transparent 60%),
+          color-mix(in oklab, var(--neon), transparent 60%)
+        );
+        background-size: 100% 2px;
+        background-repeat: no-repeat;
+        background-position: 0 100%;
+        padding-bottom: 2px;
+      }
+      .about-img {
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-strong);
+        border: 1px solid var(--line);
+      }
+      .about-img img {
+        display: block;
+        width: 100%;
+        height: auto;
+        transform: scale(1.02);
+        transition: transform 600ms ease;
+      }
+      .about-img:hover img {
+        transform: scale(1.04);
+      }
+
+      @media (max-width: 960px) {
+        .about-grid {
+          grid-template-columns: 1fr;
         }
+      }
 
-        .btn:hover {
-            background: var(--neon-green);
-            color: var(--primary-bg);
-            box-shadow: var(--glow-green);
-            transform: translateY(-2px) scale(1.05);
-        }
-
-        .btn-secondary {
-            border-color: var(--neon-cyan);
-            color: var(--neon-cyan);
-        }
-
-        .btn-secondary:hover {
-            background: var(--neon-cyan);
-            color: var(--primary-bg);
-            box-shadow: var(--glow-cyan);
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(57, 255, 20, 0.2);
-            z-index: 1000;
-            padding: 20px 0;
-            transition: all 0.3s ease;
-        }
-
-        .header.scrolled {
-            background: rgba(10, 10, 10, 0.98);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--neon-green);
-            text-decoration: none;
-            text-shadow: 0 0 15px var(--neon-green);
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 40px;
-        }
-
-        .nav-menu a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--neon-green);
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: var(--neon-green);
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .mobile-menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--neon-green);
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.8)), url('HeroBackground.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(45deg, transparent 30%, rgba(57, 255, 20, 0.1) 50%, transparent 70%),
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 231, 0.1) 0%, transparent 50%);
-            animation: heroGlow 8s ease-in-out infinite;
-        }
-
-        @keyframes heroGlow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-        }
-
-        .hero-content {
-            max-width: 800px;
-            padding: 0 30px;
-            z-index: 2;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            animation: titleGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-green); }
-            50% { text-shadow: 0 0 30px var(--neon-green), 0 0 60px var(--neon-green), 0 0 80px var(--neon-green); }
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            color: var(--text-secondary);
-            font-weight: 300;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator::before {
-            content: '↓';
-            font-size: 2rem;
-            color: var(--neon-green);
-            text-shadow: 0 0 10px var(--neon-green);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        /* Sections */
-        .section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 80px;
-            position: relative;
-        }
-
-        .section-title h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--neon-green);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
-        }
-
-        /* About Section */
-        .about {
-            background: var(--secondary-bg);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-image {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--glow-green);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .about-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text h3 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--neon-green);
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .highlight {
-            color: var(--neon-green);
-            font-weight: 600;
-        }
-
-        /* Services Section */
-        .services {
-            background: var(--primary-bg);
-        }
-
+      /* =============== Services =============== */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--grid-gap);
+      }
+      @media (max-width: 1100px) {
         .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
+          grid-template-columns: repeat(2, 1fr);
         }
-
-        .service-card {
-            background: var(--accent-bg);
-            padding: 40px 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+      }
+      @media (max-width: 640px) {
+        .services-grid {
+          grid-template-columns: 1fr;
         }
+      }
+      .service-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: clamp(18px, 2.5vw, 22px);
+        transition: transform 220ms ease, box-shadow 240ms ease,
+          border-color 240ms ease;
+        box-shadow: var(--shadow-neon);
+        display: grid;
+        gap: 12px;
+      }
+      .service-card:hover,
+      .service-card:focus-within {
+        transform: translateY(-4px);
+        border-color: color-mix(in oklab, var(--neon), transparent 55%);
+        box-shadow: var(--shadow-strong);
+      }
+      .service-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          color-mix(in oklab, var(--neon), transparent 80%),
+          color-mix(in oklab, var(--cyan), transparent 85%)
+        );
+        display: grid;
+        place-items: center;
+        box-shadow: inset 0 0 18px rgba(57, 255, 20, 0.22),
+          0 0 18px rgba(0, 255, 231, 0.18);
+      }
+      .service-icon img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 6px rgba(57, 255, 20, 0.8));
+      }
+      .service-title {
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 18px;
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+      }
+      .service-desc {
+        color: var(--muted);
+        margin: 0;
+      }
 
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(57, 255, 20, 0.05), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
+      /* =============== Portfolio =============== */
+      .portfolio-wrap {
+        position: relative;
+      }
+      .portfolio-scroller {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(280px, min(88vw, 360px));
+        gap: var(--grid-gap);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .portfolio-card {
+        position: relative;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        scroll-snap-align: start;
+        min-height: 220px;
+        box-shadow: var(--shadow-neon);
+        transition: transform 220ms ease, box-shadow 240ms ease,
+          border-color 240ms ease;
+      }
+      .portfolio-card:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in oklab, var(--cyan), transparent 55%);
+        box-shadow: var(--shadow-strong);
+      }
+      .portfolio-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: saturate(110%) contrast(1.05);
+        transition: transform 600ms ease, filter 600ms ease;
+      }
+      .portfolio-card:hover img {
+        transform: scale(1.05);
+        filter: saturate(128%) contrast(1.1);
+      }
+      .portfolio-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0) 60%
+        );
+        display: grid;
+        align-items: end;
+        padding: 18px;
+        color: var(--text);
+        opacity: 0;
+        transition: opacity 280ms ease;
+      }
+      .portfolio-card:hover .portfolio-overlay,
+      .portfolio-card:focus-within .portfolio-overlay {
+        opacity: 1;
+      }
+      .portfolio-meta {
+        display: grid;
+        gap: 6px;
+      }
+      .portfolio-title {
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--neon);
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+      }
+      .portfolio-desc {
+        margin: 0;
+        color: #cfd8e3;
+        font-size: 14px;
+      }
+      .portfolio-link {
+        justify-self: start;
+        margin-top: 6px;
+        padding: 6px 10px;
+        border-radius: 10px;
+        border: 1px solid color-mix(in oklab, var(--cyan), transparent 60%);
+        background: color-mix(in oklab, var(--bg-elev), var(--cyan) 6%);
+        color: var(--text);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: transform 200ms ease, box-shadow 220ms ease;
+      }
+      .portfolio-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 10px rgba(0, 255, 231, 0.4);
+      }
 
-        .service-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--neon-green);
-            box-shadow: var(--glow-green);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: rgba(57, 255, 20, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--neon-green);
-        }
-
-        .service-icon img {
-            width: 50px;
-            height: 50px;
-            filter: brightness(0) invert(1);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--neon-green);
-        }
-
-        .service-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            background: var(--secondary-bg);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            background: var(--accent-bg);
-            transition: all 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--glow-green);
-        }
-
-        .portfolio-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover .portfolio-image {
-            transform: scale(1.1);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
-            padding: 30px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            transform: translateY(0);
-        }
-
-        .portfolio-overlay h3 {
-            color: var(--neon-green);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .portfolio-overlay p {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .portfolio-link {
-            color: var(--neon-cyan);
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-
-        .portfolio-link:hover {
-            color: var(--neon-green);
-            text-shadow: 0 0 10px var(--neon-green);
-        }
-
-        /* Pricing Section */
-        .pricing {
-            background: var(--primary-bg);
-            position: relative;
-        }
-
-        .pricing::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('PricingIllustration.jpg') center/cover;
-            opacity: 0.1;
-            z-index: 1;
-        }
-
-        .pricing-container {
-            position: relative;
-            z-index: 2;
-        }
-
+      /* =============== Pricing =============== */
+      .pricing-area {
+        position: relative;
+      }
+      .pricing-decor {
+        position: absolute;
+        inset: -40px;
+        z-index: -1;
+        opacity: 0.15;
+        filter: blur(12px) saturate(1.1);
+        pointer-events: none;
+        background: url("./assets/PricingIllustration.jpg") center/cover
+          no-repeat;
+        border-radius: 24px;
+      }
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--grid-gap);
+      }
+      @media (max-width: 980px) {
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+          grid-template-columns: 1fr;
         }
+      }
+      .price-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: clamp(18px, 3vw, 28px);
+        display: grid;
+        gap: 12px;
+        box-shadow: var(--shadow-neon);
+        transition: transform 220ms ease, box-shadow 240ms ease,
+          border-color 240ms ease;
+      }
+      .price-card:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in oklab, var(--neon), transparent 55%);
+        box-shadow: var(--shadow-strong);
+      }
+      .plan {
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: var(--cyan);
+      }
+      .price {
+        font-size: clamp(28px, 4.5vw, 40px);
+        font-weight: 900;
+        letter-spacing: 0.06em;
+      }
+      .price .eth {
+        color: var(--neon);
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+      }
+      .price small {
+        color: var(--muted);
+        font-size: 14px;
+        margin-left: 8px;
+      }
+      .features {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 4px 0;
+        color: var(--muted);
+        display: grid;
+        gap: 8px;
+      }
+      .price-cta {
+        margin-top: 8px;
+        justify-self: start;
+      }
 
-        .pricing-card {
-            background: var(--accent-bg);
-            padding: 40px 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px solid rgba(57, 255, 20, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
+      /* =============== Contact =============== */
+      .contact {
+        background:
+          linear-gradient(
+            180deg,
+            color-mix(in oklab, var(--bg), transparent 0%),
+            color-mix(in oklab, var(--bg), transparent 0%)
+          ),
+          url("./assets/ContactBackground.jpg") center/cover no-repeat;
+        border-top: 1px solid var(--line);
+      }
+      .contact-inner {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: var(--grid-gap);
+      }
+      @media (max-width: 980px) {
+        .contact-inner {
+          grid-template-columns: 1fr;
         }
-
-        .pricing-card:hover {
-            border-color: var(--neon-green);
-            box-shadow: var(--glow-green);
-            transform: translateY(-10px);
+      }
+      .contact-info {
+        background: color-mix(in oklab, var(--bg-elev), var(--neon) 3%);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: clamp(16px, 3vw, 26px);
+        box-shadow: var(--shadow-neon);
+      }
+      .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+      .contact-item {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        align-items: start;
+        gap: 12px;
+      }
+      .contact-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: var(--neon);
+        box-shadow: inset 0 0 22px rgba(57, 255, 20, 0.22),
+          0 0 10px rgba(57, 255, 20, 0.35);
+        border: 1px solid color-mix(in oklab, var(--neon), transparent 65%);
+        background: color-mix(in oklab, var(--bg-soft), var(--neon) 7%);
+        font-weight: 800;
+      }
+      .contact-form {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: clamp(16px, 3vw, 26px);
+        box-shadow: var(--shadow-neon);
+      }
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--grid-gap);
+      }
+      @media (max-width: 640px) {
+        .form-grid {
+          grid-template-columns: 1fr;
         }
-
-        .pricing-card.featured {
-            border-color: var(--neon-green);
-            box-shadow: var(--glow-green);
-            transform: scale(1.05);
+      }
+      label {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--cyan);
+      }
+      input,
+      textarea {
+        appearance: none;
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: color-mix(in oklab, var(--bg-soft), var(--cyan) 2%);
+        color: var(--text);
+        transition: border-color 220ms ease, box-shadow 220ms ease,
+          background 220ms ease;
+      }
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: color-mix(in oklab, var(--neon), white 40%);
+      }
+      input:focus,
+      textarea:focus {
+        border-color: color-mix(in oklab, var(--cyan), transparent 40%);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--cyan), transparent 80%),
+          0 0 16px rgba(0, 255, 231, 0.2);
+        outline: none;
+      }
+      .submit {
+        margin-top: 10px;
+        position: relative;
+      }
+      .btn-pulse {
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 10px rgba(57, 255, 20, 0.35),
+            0 0 26px rgba(0, 255, 231, 0.16);
         }
-
-        .plan-name {
-            font-size: 1.8rem;
-            color: var(--neon-green);
-            margin-bottom: 20px;
-            font-weight: 700;
+        50% {
+          box-shadow: 0 0 18px rgba(57, 255, 20, 0.45),
+            0 0 40px rgba(0, 255, 231, 0.22);
         }
+      }
+      .form-status {
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--muted);
+      }
 
-        .plan-price {
-            font-size: 3rem;
-            color: var(--neon-green);
-            margin-bottom: 10px;
-            font-weight: 900;
+      /* =============== Footer =============== */
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        background: linear-gradient(
+          to top,
+          color-mix(in oklab, var(--bg-elev), transparent 0%),
+          transparent
+        );
+      }
+      .footer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .social {
+        display: flex;
+        gap: 12px;
+      }
+      .social a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 38px;
+        height: 38px;
+        padding: 0 10px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        color: var(--neon);
+        background: color-mix(in oklab, var(--bg-soft), var(--neon) 4%);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 12px;
+        transition: transform 200ms ease, box-shadow 220ms ease,
+          border-color 220ms ease, color 200ms ease;
+        box-shadow: 0 0 10px rgba(57, 255, 20, 0.25);
+      }
+      .social a:hover,
+      .social a:focus-visible {
+        transform: translateY(-2px);
+        border-color: color-mix(in oklab, var(--neon), transparent 50%);
+        box-shadow: 0 0 16px rgba(57, 255, 20, 0.4),
+          0 0 30px rgba(0, 255, 231, 0.2);
+        color: var(--text);
+      }
+      .copyright {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* =============== Reduced Motion =============== */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
-
-        .plan-price-eth {
-            font-size: 1.2rem;
-            color: var(--neon-cyan);
-            margin-bottom: 30px;
+        .hero .title-flicker,
+        .btn-pulse,
+        .scroll-indicator .chevron {
+          animation: none !important;
         }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
+        .reveal {
+          transition: none;
+          opacity: 1 !important;
+          transform: none !important;
         }
+      }
 
-        .plan-features li {
-            padding: 10px 0;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(57, 255, 20, 0.1);
-        }
-
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-
-        /* Contact Section */
-        .contact {
-            background: var(--secondary-bg);
-            position: relative;
-        }
-
-        .contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('ContactBackground.jpg') center/cover;
-            opacity: 0.1;
-            z-index: 1;
-        }
-
-        .contact-container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-        }
-
-        .contact-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--neon-green);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(57, 255, 20, 0.05);
-            border-radius: 10px;
-            border: 1px solid rgba(57, 255, 20, 0.2);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            font-size: 1.5rem;
-            color: var(--primary-bg);
-        }
-
-        .contact-form {
-            background: var(--accent-bg);
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(57, 255, 20, 0.2);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--neon-green);
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-bg);
-            border: 2px solid rgba(57, 255, 20, 0.3);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--neon-green);
-            box-shadow: var(--glow-green);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--primary-bg);
-            padding: 40px 0;
-            border-top: 1px solid rgba(57, 255, 20, 0.2);
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            background: transparent;
-            border: 2px solid var(--neon-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--neon-green);
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            background: var(--neon-green);
-            color: var(--primary-bg);
-            box-shadow: var(--glow-green);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .section {
-                padding: 60px 0;
-            }
-
-            .section-container {
-                padding: 0 20px;
-            }
-
-            .service-card {
-                padding: 30px 20px;
-            }
-
-            .pricing-card {
-                padding: 30px 20px;
-            }
-        }
-
-        /* Animation Classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.6s ease;
-        }
-
-        .slide-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.6s ease;
-        }
-
-        .slide-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+      /* =============== No-JS fallback for reveal =============== */
+      noscript .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     </style>
-</head>
-<body>
-    <!-- Background Particles -->
-    <div class="particles" id="particles"></div>
+  </head>
 
-    <!-- Header -->
-    <header class="header" id="header">
-        <nav class="nav-container">
-            <a href="#" class="logo glow-text">MOKSHA STUDIOS</a>
-            <ul class="nav-menu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="mobile-menu-toggle" id="mobileMenuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <header role="banner">
+      <div class="container nav" aria-label="Primary">
+        <div class="brand" aria-label="MOKSHA STUDIOS">
+          <span class="brand-badge" aria-hidden="true"></span>
+          <span>MOKSHA STUDIOS</span>
+        </div>
+        <nav aria-label="Main Navigation">
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
         </nav>
+        <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle theme">
+          Toggle Theme
+        </button>
+      </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <h1 class="glow-text">MOKSHA STUDIOS</h1>
-            <p>Innovating the Future of Blockchain, AI, and Web3</p>
-            <div class="hero-buttons">
-                <a href="#portfolio" class="btn">Explore Portfolio</a>
-                <a href="#contact" class="btn btn-secondary">Contact Us</a>
-            </div>
+    <main id="main">
+       HERO 
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-content container reveal">
+          <h1 id="hero-title" class="title-flicker">MOKSHA STUDIOS</h1>
+          <p>Innovating the Future of <span class="highlight" style="color: var(--neon); text-shadow: 0 0 10px rgba(57,255,20,.4); font-weight: 700;">Blockchain</span>, <span class="highlight" style="color: var(--neon); text-shadow: 0 0 10px rgba(57,255,20,.4); font-weight: 700;">AI</span>, and <span class="highlight" style="color: var(--neon); text-shadow: 0 0 10px rgba(57,255,20,.4); font-weight: 700;">Web3</span></p>
+          <div class="cta-row" role="group" aria-label="Primary actions">
+            <a class="btn" href="#portfolio">Explore Portfolio</a>
+            <a class="btn btn-outline" href="#contact">Contact Us</a>
+          </div>
         </div>
-        <div class="scroll-indicator"></div>
-    </section>
+        <a href="#about" class="scroll-indicator" aria-label="Scroll to About">
+          <span>Scroll</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </a>
+      </section>
 
-    <!-- About Section -->
-    <section class="section about" id="about">
-        <div class="section-container">
-            <div class="section-title">
-                <h2>About Us</h2>
+       ABOUT 
+      <section id="about" aria-labelledby="about-title">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="eyebrow">Who We Are</span>
+            <h2 id="about-title">About MOKSHA STUDIOS</h2>
+            <p class="section-desc">
+              We craft decentralized solutions with cutting-edge design and robust engineering.
+            </p>
+          </div>
+          <div class="about-grid">
+            <div class="about-img reveal" aria-hidden="true">
+              <img
+                src="./assets/AboutImage.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-            <div class="about-content">
-                <div class="about-image slide-in-left">
-                    <img src="AboutImage.jpg" alt="MOKSHA STUDIOS - AI and Blockchain Technology">
-                </div>
-                <div class="about-text slide-in-right">
-                    <h3>Pioneering Digital Innovation</h3>
-                    <p><span class="highlight">MOKSHA STUDIOS</span> is a visionary IT team specializing in <span class="highlight">blockchain development</span>, <span class="highlight">AI integration</span>, <span class="highlight">Web3 solutions</span>, and <span class="highlight">decentralized applications</span>.</p>
-                    <p>We empower businesses worldwide with innovative digital transformations and share knowledge through comprehensive training platforms, driving the future of decentralized technology.</p>
-                    <p>Our expertise spans from smart contract development to AI-powered analytics, creating seamless bridges between traditional systems and the emerging Web3 ecosystem.</p>
-                </div>
+            <div class="about-card reveal" role="article">
+              <p>
+                <span class="highlight">MOKSHA STUDIOS</span> is a visionary IT team specializing in
+                <u>blockchain development</u>, <u>AI integration</u>, <u>Web3 solutions</u>, and
+                <u>decentralized applications</u>. We empower businesses worldwide with innovative
+                digital transformations and share knowledge through comprehensive training platforms.
+              </p>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Services Section -->
-    <section class="section services" id="services">
-        <div class="section-container">
-            <div class="section-title">
-                <h2>Our Services</h2>
-            </div>
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <img src="AISolutionsIcon.jpg" alt="AI Solutions">
-                    </div>
-                    <h3>AI Solutions</h3>
-                    <p>Cutting-edge artificial intelligence integration, machine learning models, and predictive analytics for modern businesses.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <img src="BlockchainDevelopmentIcon.jpg" alt="Blockchain Development">
-                    </div>
-                    <h3>Blockchain Development</h3>
-                    <p>Custom blockchain solutions, smart contracts, DeFi protocols, and decentralized applications built for the future.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <img src="CreativeDesignIcon.jpg" alt="Creative Design">
-                    </div>
-                    <h3>Creative Design</h3>
-                    <p>Futuristic UI/UX design, brand identity, and visual solutions that capture the essence of innovation.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">
-                        <img src="DigitalMarketingIcon.jpg" alt="Digital Marketing">
-                    </div>
-                    <h3>Digital Marketing</h3>
-                    <p>Strategic digital marketing campaigns, SEO optimization, and growth strategies for Web3 and tech companies.</p>
-                </div>
-            </div>
+       SERVICES 
+      <section id="services" aria-labelledby="services-title">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="eyebrow">What We Do</span>
+            <h2 id="services-title">Services</h2>
+            <p class="section-desc">
+              From protocol to product: strategy, engineering, design, and growth.
+            </p>
+          </div>
+          <div class="services-grid">
+            <article class="service-card reveal">
+              <div class="service-icon" aria-hidden="true">
+                <img
+                  src="./assets/AISolutionsIcon.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 class="service-title">AI Solutions</h3>
+              <p class="service-desc">
+                Intelligent agents, data pipelines, and on-chain AI—built for scale and safety.
+              </p>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="service-icon" aria-hidden="true">
+                <img
+                  src="./assets/BlockchainDevelopmentIcon.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 class="service-title">Blockchain Dev</h3>
+              <p class="service-desc">
+                Smart contracts, DApps, and Layer 2 integrations with rigorous security practices.
+              </p>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="service-icon" aria-hidden="true">
+                <img
+                  src="./assets/CreativeDesignIcon.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 class="service-title">Creative Design</h3>
+              <p class="service-desc">
+                Cyberpunk UI, 3D visuals, brand systems, and immersive product design.
+              </p>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="service-icon" aria-hidden="true">
+                <img
+                  src="./assets/DigitalMarketingIcon.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 class="service-title">Digital Marketing</h3>
+              <p class="service-desc">
+                Web3-native growth, community, and content that converts and endures.
+              </p>
+            </article>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Portfolio Section -->
-    <section class="section portfolio" id="portfolio">
-        <div class="section-container">
-            <div class="section-title">
-                <h2>Our Portfolio</h2>
-            </div>
-            <div class="portfolio-grid">
-                <div class="portfolio-item fade-in">
-                    <img src="AIArtworkGenerationInterface.jpg" alt="AI Artwork Generation Interface" class="portfolio-image">
-                    <div class="portfolio-overlay">
-                        <h3>AI Artwork Generation</h3>
-                        <p>Revolutionary AI-powered creative platform for generating unique digital artworks and NFTs.</p>
-                        <a href="#" class="portfolio-link">View Project →</a>
-                    </div>
+       PORTFOLIO 
+      <section id="portfolio" aria-labelledby="portfolio-title">
+        <div class="container portfolio-wrap">
+          <div class="section-header reveal">
+            <span class="eyebrow">Selected Work</span>
+            <h2 id="portfolio-title">Portfolio</h2>
+            <p class="section-desc">
+              Interfaces and platforms across DeFi, NFTs, metaverse, and beyond.
+            </p>
+          </div>
+          <div class="portfolio-scroller" aria-label="Portfolio gallery">
+             Each card 
+            <figure class="portfolio-card reveal">
+              <img
+                src="./assets/AIArtworkGenerationInterface.jpg"
+                alt="AI Artwork Generation Interface"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portfolio-overlay">
+                <div class="portfolio-meta">
+                  <h3 class="portfolio-title">AI Art Engine</h3>
+                  <p class="portfolio-desc">Real-time generative artwork pipeline.</p>
+                  <a class="portfolio-link" href="#" aria-label="Open AI Art Engine Project">Open</a>
                 </div>
-                <div class="portfolio-item fade-in">
-                    <img src="NFTGallery.jpg" alt="NFT Gallery Platform" class="portfolio-image">
-                    <div class="portfolio-overlay">
-                        <h3>NFT Gallery Platform</h3>
-                        <p>Comprehensive NFT marketplace with advanced trading features and community engagement tools.</p>
-                        <a href="#" class="portfolio-link">View Project →</a>
-                    </div>
+              </figcaption>
+            </figure>
+
+            <figure class="portfolio-card reveal">
+              <img
+                src="./assets/NFTGallery.jpg"
+                alt="NFT Gallery Platform"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portfolio-overlay">
+                <div class="portfolio-meta">
+                  <h3 class="portfolio-title">NFT Gallery</h3>
+                  <p class="portfolio-desc">Curated digital collections with on-chain provenance.</p>
+                  <a class="portfolio-link" href="#" aria-label="Open NFT Gallery Project">Open</a>
                 </div>
-                <div class="portfolio-item fade-in">
-                    <img src="MetaverseInterface.jpg" alt="Metaverse Interface" class="portfolio-image">
-                    <div class="portfolio-overlay">
-                        <h3>Metaverse Interface</h3>
-                        <p>Immersive 3D virtual world interface with blockchain integration and social features.</p>
-                        <a href="#" class="portfolio-link">View Project →</a>
-                    </div>
+              </figcaption>
+            </figure>
+
+            <figure class="portfolio-card reveal">
+              <img
+                src="./assets/MetaverseInterface.jpg"
+                alt="Metaverse Interface"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portfolio-overlay">
+                <div class="portfolio-meta">
+                  <h3 class="portfolio-title">Metaverse Hub</h3>
+                  <p class="portfolio-desc">Interoperable 3D social experiences.</p>
+                  <a class="portfolio-link" href="#" aria-label="Open Metaverse Hub Project">Open</a>
                 </div>
-                <div class="portfolio-item fade-in">
-                    <img src="CryptoWalletDashboard.jpg" alt="Crypto Wallet Dashboard" class="portfolio-image">
-                    <div class="portfolio-overlay">
-                        <h3>Crypto Wallet Dashboard</h3>
-                        <p>Secure and user-friendly cryptocurrency wallet with portfolio tracking and DeFi integration.</p>
-                        <a href="#" class="portfolio-link">View Project →</a>
-                    </div>
+              </figcaption>
+            </figure>
+
+            <figure class="portfolio-card reveal">
+              <img
+                src="./assets/CryptoWalletDashboard.jpg"
+                alt="Crypto Wallet Dashboard"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portfolio-overlay">
+                <div class="portfolio-meta">
+                  <h3 class="portfolio-title">Wallet Dashboard</h3>
+                  <p class="portfolio-desc">Unified balances, swaps, and analytics.</p>
+                  <a class="portfolio-link" href="#" aria-label="Open Wallet Dashboard Project">Open</a>
                 </div>
-                <div class="portfolio-item fade-in">
-                    <img src="DecentralizedAppInterface.jpg" alt="Decentralized App Interface" class="portfolio-image">
-                    <div class="portfolio-overlay">
-                        <h3>DeFi Application</h3>
-                        <p>Decentralized finance platform with yield farming, staking, and liquidity provision features.</p>
-                        <a href="#" class="portfolio-link">View Project →</a>
-                    </div>
+              </figcaption>
+            </figure>
+
+            <figure class="portfolio-card reveal">
+              <img
+                src="./assets/DecentralizedAppInterface.jpg"
+                alt="Decentralized App Interface"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portfolio-overlay">
+                <div class="portfolio-meta">
+                  <h3 class="portfolio-title">DApp Interface</h3>
+                  <p class="portfolio-desc">Secure transactional UX for DeFi protocols.</p>
+                  <a class="portfolio-link" href="#" aria-label="Open DApp Interface Project">Open</a>
                 </div>
-                <div class="portfolio-item fade-in">
-                    <img src="VirtualMarketplace.jpg" alt="Virtual Marketplace" class="portfolio-image">
-                    <div class="portfolio-overlay">
-                        <h3>Virtual Marketplace</h3>
-                        <p>3D virtual shopping experience with blockchain-based ownership and digital asset trading.</p>
-                        <a href="#" class="portfolio-link">View Project →</a>
-                    </div>
+              </figcaption>
+            </figure>
+
+            <figure class="portfolio-card reveal">
+              <img
+                src="./assets/VirtualMarketplace.jpg"
+                alt="Virtual Marketplace"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="portfolio-overlay">
+                <div class="portfolio-meta">
+                  <h3 class="portfolio-title">Virtual Market</h3>
+                  <p class="portfolio-desc">Peer-to-peer commerce in virtual spaces.</p>
+                  <a class="portfolio-link" href="#" aria-label="Open Virtual Market Project">Open</a>
                 </div>
-            </div>
+              </figcaption>
+            </figure>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Pricing Section -->
-    <section class="section pricing" id="pricing">
-        <div class="section-container pricing-container">
-            <div class="section-title">
-                <h2>Pricing Plans</h2>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card fade-in">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$2,999</div>
-                    <div class="plan-price-eth">0.5 ETH</div>
-                    <ul class="plan-features">
-                        <li>Basic Web3 Integration</li>
-                        <li>Smart Contract Development</li>
-                        <li>Basic AI Features</li>
-                        <li>3 Months Support</li>
-                        <li>Documentation</li>
-                    </ul>
-                    <a href="#contact" class="btn">Get Started</a>
-                </div>
-                <div class="pricing-card featured fade-in">
-                    <h3 class="plan-name">Pro</h3>
-                    <div class="plan-price">$7,999</div>
-                    <div class="plan-price-eth">1.2 ETH</div>
-                    <ul class="plan-features">
-                        <li>Advanced Web3 Solutions</li>
-                        <li>Custom AI Integration</li>
-                        <li>DeFi Protocol Development</li>
-                        <li>6 Months Support</li>
-                        <li>Priority Support</li>
-                        <li>Training & Workshops</li>
-                    </ul>
-                    <a href="#contact" class="btn">Get Started</a>
-                </div>
-                <div class="pricing-card fade-in">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">$19,999</div>
-                    <div class="plan-price-eth">3.0 ETH</div>
-                    <ul class="plan-features">
-                        <li>Full-Stack Web3 Platform</li>
-                        <li>Advanced AI Solutions</li>
-                        <li>Custom Blockchain</li>
-                        <li>1 Year Support</li>
-                        <li>Dedicated Team</li>
-                        <li>24/7 Support</li>
-                    </ul>
-                    <a href="#contact" class="btn">Get Started</a>
-                </div>
-            </div>
+       PRICING 
+      <section id="pricing" aria-labelledby="pricing-title" class="pricing-area">
+        <div class="pricing-decor" aria-hidden="true"></div>
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="eyebrow">Transparent Options</span>
+            <h2 id="pricing-title">Pricing</h2>
+            <p class="section-desc">
+              Flexible plans for startups to enterprises. Pay in ETH with USD equivalents.
+            </p>
+          </div>
+          <div class="pricing-grid">
+            <article class="price-card reveal" aria-label="Starter plan">
+              <div class="plan">Starter</div>
+              <div class="price">
+                <span class="eth">0.35 ETH</span>
+                <small>(~$800)</small>
+              </div>
+              <ul class="features">
+                <li>Discovery workshop</li>
+                <li>Landing page or MVP prototype</li>
+                <li>Basic smart contract</li>
+                <li>1 week support</li>
+              </ul>
+              <a href="#contact" class="btn price-cta">Get Started</a>
+            </article>
+
+            <article class="price-card reveal" aria-label="Pro plan">
+              <div class="plan">Pro</div>
+              <div class="price">
+                <span class="eth">1.2 ETH</span>
+                <small>(~$2.7k)</small>
+              </div>
+              <ul class="features">
+                <li>Full DApp or AI integration</li>
+                <li>UI/UX design system</li>
+                <li>Audit-ready contracts</li>
+                <li>1 month support</li>
+              </ul>
+              <a href="#contact" class="btn price-cta">Get Started</a>
+            </article>
+
+            <article class="price-card reveal" aria-label="Enterprise plan">
+              <div class="plan">Enterprise</div>
+              <div class="price">
+                <span class="eth">Custom</span>
+                <small>(Contact)</small>
+              </div>
+              <ul class="features">
+                <li>End-to-end platform</li>
+                <li>Advanced AI + multi-chain</li>
+                <li>Security review & training</li>
+                <li>Dedicated success team</li>
+              </ul>
+              <a href="#contact" class="btn price-cta">Get Started</a>
+            </article>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Contact Section -->
-    <section class="section contact" id="contact">
-        <div class="section-container contact-container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
+       CONTACT 
+      <section id="contact" aria-labelledby="contact-title" class="contact">
+        <div class="container contact-inner">
+          <div class="contact-info reveal">
+            <div class="section-header">
+              <span class="eyebrow">Get in Touch</span>
+              <h2 id="contact-title">Contact</h2>
+              <p class="section-desc">
+                Partnerships, quotes, or questions — we reply within 24 hours.
+              </p>
             </div>
-            <div class="contact-content">
-                <div class="contact-info slide-in-left">
-                    <h3>Let's Build the Future Together</h3>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <h4>Address</h4>
-                            <p>Innovation District, Tech Valley<br>Silicon City, SC 94000</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>hello@mokshastudios.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+1 (555) 123-4567</p>
-                        </div>
-                    </div>
+            <ul class="contact-list" role="list">
+              <li class="contact-item">
+                <div class="contact-icon" aria-hidden="true">📍</div>
+                <div>
+                  <strong>Address</strong><br />
+                  42 Neon Way, Sector-7, Cyber City
                 </div>
-                <div class="contact-form slide-in-right">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" placeholder="Project inquiry" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
+              </li>
+              <li class="contact-item">
+                <div class="contact-icon" aria-hidden="true">✉️</div>
+                <div>
+                  <strong>Email</strong><br />
+                  hello@moksha.studio
                 </div>
+              </li>
+              <li class="contact-item">
+                <div class="contact-icon" aria-hidden="true">☎️</div>
+                <div>
+                  <strong>Phone</strong><br />
+                  +1 (555) 010-2030
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <form class="contact-form reveal" aria-describedby="form-status" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@domain.com" required />
+              </div>
             </div>
+            <div class="field" style="margin-top: var(--grid-gap);">
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" type="text" placeholder="Project, quote, or inquiry" />
+            </div>
+            <div class="field" style="margin-top: var(--grid-gap);">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your goals…" required></textarea>
+            </div>
+            <div class="submit">
+              <button type="submit" class="btn btn-pulse">Send Message</button>
+              <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+            </div>
+          </form>
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="social-links">
-            <a href="#" class="social-link" aria-label="Twitter">��</a>
-            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
-            <a href="#" class="social-link" aria-label="GitHub">⌥</a>
+    <footer role="contentinfo">
+      <div class="container footer-row">
+        <div class="social" aria-label="Social links">
+          <a href="#" aria-label="Twitter (X)">X</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="GitHub">GH</a>
         </div>
         <div class="copyright">
-            © 2025 MOKSHA STUDIOS. All rights reserved. Building the future of Web3 innovation.
+          © <span id="year"></span> MOKSHA STUDIOS. All rights reserved.
         </div>
+      </div>
     </footer>
 
+    <noscript>
+      <style>
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+
     <script>
-        // Particle System
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
+      // =============== Year ===============
+      document.getElementById("year").textContent = new Date().getFullYear();
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                particlesContainer.appendChild(particle);
-            }
+      // =============== Theme Toggle ===============
+      (function () {
+        const root = document.documentElement;
+        const toggle = document.getElementById("themeToggle");
+        const key = "theme";
+        const saved = localStorage.getItem(key);
+        if (saved === "light") {
+          root.setAttribute("data-theme", "light");
+          toggle.setAttribute("aria-pressed", "true");
         }
-
-        // Scroll Effects
-        function handleScroll() {
-            const header = document.getElementById('header');
-            const scrolled = window.scrollY > 50;
-            
-            if (scrolled) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-
-            // Reveal animations
-            const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
-            elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('visible');
-                }
-            });
-        }
-
-        // Smooth Scrolling
-        function initSmoothScrolling() {
-            const links = document.querySelectorAll('a[href^="#"]');
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    if (targetSection) {
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Form Handling
-        function initContactForm() {
-            const form = document.getElementById('contactForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Get form data
-                    const formData = new FormData(form);
-                    const data = Object.fromEntries(formData);
-                    
-                    // Simulate form submission
-                    console.log('Form submitted:', data);
-                    
-                    // Show success message (you can customize this)
-                    alert('Thank you for your message! We\'ll get back to you soon.');
-                    form.reset();
-                });
-            }
-        }
-
-        // Mobile Menu Toggle
-        function initMobileMenu() {
-            const mobileToggle = document.getElementById('mobileMenuToggle');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (mobileToggle && navMenu) {
-                mobileToggle.addEventListener('click', function() {
-                    navMenu.classList.toggle('active');
-                    this.classList.toggle('active');
-                });
-            }
-        }
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            initSmoothScrolling();
-            initContactForm();
-            initMobileMenu();
-            
-            // Initial scroll check
-            handleScroll();
-            
-            // Add scroll event listener
-            window.addEventListener('scroll', handleScroll);
+        toggle.addEventListener("click", () => {
+          const current = root.getAttribute("data-theme");
+          const next = current === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", next);
+          toggle.setAttribute("aria-pressed", next === "light");
+          localStorage.setItem(key, next);
         });
+      })();
 
-        // Add some interactive effects
-        document.addEventListener('mousemove', function(e) {
-            const particles = document.querySelectorAll('.particle');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            particles.forEach((particle, index) => {
-                const speed = (index % 3 + 1) * 0.5;
-                const x = (mouseX - 0.5) * speed;
-                const y = (mouseY - 0.5) * speed;
-                
-                particle.style.transform = `translate(${x}px, ${y}px)`;
+      // =============== IntersectionObserver Reveal ===============
+      (function () {
+        const items = document.querySelectorAll(".reveal");
+        if (!("IntersectionObserver" in window)) {
+          items.forEach((el) => el.classList.add("in-view"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                io.unobserve(entry.target);
+              }
             });
-        });
+          },
+          { threshold: 0.12 }
+        );
+        items.forEach((el) => io.observe(el));
+      })();
 
-        // Add glitch effect to logo on hover
-        document.addEventListener('DOMContentLoaded', function() {
-            const logo = document.querySelector('.logo');
-            if (logo) {
-                logo.addEventListener('mouseenter', function() {
-                    this.style.textShadow = '0 0 20px var(--neon-green), 0 0 40px var(--neon-green), 0 0 60px var(--neon-green)';
-                    this.style.animation = 'none';
-                });
-                
-                logo.addEventListener('mouseleave', function() {
-                    this.style.textShadow = '0 0 15px var(--neon-green)';
-                    this.style.animation = 'titleGlow 3s ease-in-out infinite';
-                });
-            }
+      // =============== Particle Background ===============
+      (function () {
+        const canvas = document.getElementById("bg-canvas");
+        const ctx = canvas.getContext("2d", { alpha: true });
+        let w, h, dpr, particles, tick = 0;
+        const maxParticles = 90; // small and subtle
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function resize() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          w = canvas.width = Math.floor(window.innerWidth * dpr);
+          h = canvas.height = Math.floor(window.innerHeight * dpr);
+          canvas.style.width = window.innerWidth + "px";
+          canvas.style.height = window.innerHeight + "px";
+          initParticles();
+        }
+
+        function rand(a, b) { return Math.random() * (b - a) + a; }
+
+        function initParticles() {
+          particles = [];
+          const count = prefersReducedMotion ? 20 : maxParticles;
+          for (let i = 0; i < count; i++) {
+            particles.push({
+              x: rand(0, w),
+              y: rand(0, h),
+              r: rand(0.5, 1.8) * dpr,
+              a: rand(0.25, 0.6),
+              vx: rand(-0.08, 0.08) * dpr,
+              vy: rand(-0.06, 0.06) * dpr,
+              hue: Math.random() < 0.6 ? 110 : 175 // green/cyan hues
+            });
+          }
+        }
+
+        function step() {
+          tick++;
+          ctx.clearRect(0, 0, w, h);
+
+          for (let p of particles) {
+            p.x += p.vx + Math.sin((tick + p.x) * 0.0008) * 0.06;
+            p.y += p.vy + Math.cos((tick + p.y) * 0.0007) * 0.06;
+
+            if (p.x < -10) p.x = w + 10;
+            if (p.x > w + 10) p.x = -10;
+            if (p.y < -10) p.y = h + 10;
+            if (p.y > h + 10) p.y = -10;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            const glow = p.hue === 110 ? "rgba(57,255,20," + p.a + ")" : "rgba(0,255,231," + p.a + ")";
+            ctx.fillStyle = glow;
+            ctx.shadowColor = glow;
+            ctx.shadowBlur = 18 * dpr;
+            ctx.fill();
+          }
+
+          if (!prefersReducedMotion) requestAnimationFrame(step);
+        }
+
+        window.addEventListener("resize", resize);
+        resize();
+        if (!prefersReducedMotion) requestAnimationFrame(step);
+      })();
+
+      // =============== Contact Form (client-only demo) ===============
+      (function () {
+        const form = document.querySelector(".contact-form");
+        const status = document.getElementById("form-status");
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          status.textContent = "Sending…";
+          setTimeout(() => {
+            status.textContent = "Message sent! We’ll get back to you shortly.";
+            form.reset();
+          }, 900);
         });
+      })();
     </script>
-</body>
+  </body>
 </html>
